@@ -14,7 +14,7 @@ const getBookByIdHandler = async (req, res) => {
   try {
     const book = await getBookById(req.params.id);
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      res.status(404).json({ message: 'Book not found' });
     }
     return res.status(200).json(book);
   } catch (error) {
