@@ -53,7 +53,9 @@
  *       201:
  *         description: Author created successfully
  *       400:
- *         description: Invalid author data or id already exists
+ *         description: Invalid author data
+ *       409:
+ *         description: Author id already exists
  *       500:
  *         description: Unable to create author
  */

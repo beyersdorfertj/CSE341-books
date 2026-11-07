@@ -110,12 +110,12 @@ describe('Authors routes (mocked DB)', () => {
       expect(res.status).toBe(400);
     });
 
-    test('returns 400 when the id already exists', async () => {
+    test('returns 409 when the id already exists', async () => {
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a4' });
 
       const res = await request(app).post('/authors').send(validAuthor);
 
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(409);
     });
   });
 
