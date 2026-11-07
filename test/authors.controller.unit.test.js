@@ -125,13 +125,13 @@ describe('authors controller (unit)', () => {
       expect(res.status).toHaveBeenCalledWith(400);
     });
 
-    test('responds 400 when the id already exists', async () => {
+    test('responds 409 when the id already exists', async () => {
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a4' });
       const res = mockRes();
 
       await createAuthorHandler({ body: validAuthor }, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(409);
     });
   });
 

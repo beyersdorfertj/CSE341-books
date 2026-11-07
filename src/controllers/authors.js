@@ -48,7 +48,7 @@ const createAuthorHandler = async (req, res) => {
       return res.status(400).json({ message: 'Invalid author data' });
     }
     if (await getAuthorById(id)) {
-      return res.status(400).json({ message: 'Author id already exists' });
+      return res.status(409).json({ message: 'Author id already exists' });
     }
     return res.status(201).json(await createAuthor({ id, name, birthYear }));
   } catch (err) {
