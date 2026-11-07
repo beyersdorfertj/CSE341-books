@@ -14,7 +14,10 @@ const getAuthorById = async (authorId) => {
 };
 
 const createAuthor = async (author) => {
-  throw new Error('Not implemented');
+  const db = await getDb();
+  await db.collection('authors').insertOne(author);
+  const { _id, ...created } = author;
+  return created;
 };
 
 const updateAuthor = async (authorId, fields) => {

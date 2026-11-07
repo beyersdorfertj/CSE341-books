@@ -32,8 +32,29 @@ const getAuthorByIdHandler = async (req, res) => {
   }
 };
 
+const isValidAuthor = ({ id, name, birthYear }) => {
+  const currentYear = new Date().getFullYear();
+  return (
+    typeof id === 'string' && id.trim() !== '' &&
+    typeof name === 'string' && name.trim() !== '' &&
+    Number.isInteger(birthYear) && birthYear >= 1000 && birthYear <= currentYear
+  );
+};
+
 const createAuthorHandler = async (req, res) => {
-  return res.status(501).json({ message: 'Not implemented' });
+  try {
+    const { id, name, birthYear } = req.body;
+    if (!isValidAuthor({ id, name, birthYear })) {
+      return res.status(400).json({ message: 'Invalid author data' });
+    }
+    if (await getAuthorById(id)) {
+      return res.status(400).json({ message: 'Author id already exists' });
+    }
+    return res.status(201).json(await createAuthor({ id, name, birthYear }));
+  } catch (err) {
+    console.error('POST /authors failed', err.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 const updateAuthorHandler = async (req, res) => {
