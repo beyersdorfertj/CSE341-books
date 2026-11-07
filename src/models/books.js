@@ -10,12 +10,15 @@ const getBookById = async (bookId) => {
     return await db.collection('books').findOne({ id: bookId }, { projection: { _id: 0 } });
 };
 
-// Stubs for issue-03 (finish books CRUD). Bodies to be implemented.
-// Contract is pinned by test/books.model.unit.test.js.
-
 const createBook = async (book) => {
-    throw new Error('Not implemented');
+    const db = await getDb();
+    await db.collection('books').insertOne(book);
+    const { _id, ...created } = book;
+    return created;
 };
+
+// Stubs for later issues (books update/delete). Bodies to be implemented.
+// Contract is pinned by test/books.model.unit.test.js.
 
 const updateBook = async (bookId, fields) => {
     throw new Error('Not implemented');

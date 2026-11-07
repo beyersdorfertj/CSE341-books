@@ -146,6 +146,46 @@
  *         description: Books returned successfully
  *       500:
  *         description: Unable to retrieve books
+ *   post:
+ *     summary: Create a new book
+ *     tags:
+ *       - Books
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - authorId
+ *               - title
+ *               - publicationDate
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 example: b4
+ *               authorId:
+ *                 type: string
+ *                 example: a1
+ *               title:
+ *                 type: string
+ *                 example: Example
+ *               publicationDate:
+ *                 type: string
+ *                 format: date
+ *                 example: 2026-01-15
+ *     responses:
+ *       201:
+ *         description: Book created successfully
+ *       400:
+ *         description: Invalid book data
+ *       409:
+ *         description: Book id already exists
+ *       422:
+ *         description: authorId does not match an existing author
+ *       500:
+ *         description: Unable to create book
  */
 
 /**
