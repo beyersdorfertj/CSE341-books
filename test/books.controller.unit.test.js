@@ -147,7 +147,7 @@ describe('books controller (unit)', () => {
     });
   });
 
-  describe.skip('updateBookHandler', () => {
+  describe('updateBookHandler', () => {
     test('responds 200 when the book is updated', async () => {
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a2' });
       booksModel.updateBook.mockResolvedValue({ matchedCount: 1 });
@@ -159,13 +159,13 @@ describe('books controller (unit)', () => {
       expect(res.status).toHaveBeenCalledWith(200);
     });
 
-    test('responds 400 when authorId does not match an existing author', async () => {
+    test('responds 422 when authorId does not match an existing author', async () => {
       authorsModel.getAuthorById.mockResolvedValue(null);
       const res = mockRes();
 
       await updateBookHandler({ params: { id: 'b1' }, body: validUpdate }, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.status).toHaveBeenCalledWith(422);
     });
 
     test('responds 404 when the book does not exist', async () => {

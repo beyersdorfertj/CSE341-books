@@ -208,4 +208,46 @@
  *         description: Book not found
  *       500:
  *         description: Unable to retrieve book
+ *   put:
+ *     summary: Update an existing book
+ *     tags:
+ *       - Books
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - authorId
+ *               - title
+ *               - publicationDate
+ *             properties:
+ *               authorId:
+ *                 type: string
+ *                 example: a2
+ *               title:
+ *                 type: string
+ *                 example: Updated Book Title
+ *               publicationDate:
+ *                 type: string
+ *                 format: date
+ *                 example: 2026-02-20
+ *     responses:
+ *       200:
+ *         description: Book updated successfully
+ *       400:
+ *         description: Invalid book data
+ *       404:
+ *         description: Book not found
+ *       422:
+ *         description: authorId does not match an existing author
+ *       500:
+ *         description: Unable to update book
  */

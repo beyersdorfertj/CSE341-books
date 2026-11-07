@@ -72,7 +72,7 @@ describe('books model (unit)', () => {
     expect(result).toEqual(book);
   });
 
-  test.skip('updateBook updates by id with $set and returns the result', async () => {
+  test('updateBook updates by id with $set and returns the result', async () => {
     const fields = { title: 'New' };
     collection.updateOne.mockResolvedValue({ matchedCount: 1 });
 
