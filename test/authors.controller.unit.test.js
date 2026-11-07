@@ -48,7 +48,7 @@ const mockRes = () => {
 const validAuthor = { id: 'a4', name: 'Jane Doe', birthYear: 1975 };
 const validUpdate = { name: 'Jane A. Doe', birthYear: 1976 };
 
-// Read (#14) and create (#12) enabled. Update/delete stay skipped (issues #16/#17).
+// Read (#14), create (#12) and update (#15) enabled. Delete stays skipped.
 describe('authors controller (unit)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -135,7 +135,7 @@ describe('authors controller (unit)', () => {
     });
   });
 
-  describe.skip('updateAuthorHandler', () => {
+  describe('updateAuthorHandler', () => {
     test('responds 200 when the author is updated', async () => {
       authorsModel.updateAuthor.mockResolvedValue({ matchedCount: 1 });
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a1', ...validUpdate });

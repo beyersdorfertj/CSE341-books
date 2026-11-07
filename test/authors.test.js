@@ -29,7 +29,7 @@ const { default: app } = await import('../app.js');
 const validAuthor = { id: 'a4', name: 'Jane Doe', birthYear: 1975 };
 const validUpdate = { name: 'Jane A. Doe', birthYear: 1976 };
 
-// Read (#14) and create (#12) enabled. Update/delete stay skipped (issues #16/#17).
+// Read (#14), create (#12) and update (#15) enabled. Delete stays skipped.
 describe('Authors routes (mocked DB)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -119,7 +119,7 @@ describe('Authors routes (mocked DB)', () => {
     });
   });
 
-  describe.skip('PUT /authors/:id', () => {
+  describe('PUT /authors/:id', () => {
     test('updates an author and returns 200', async () => {
       authorsModel.updateAuthor.mockResolvedValue({ matchedCount: 1 });
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a1', ...validUpdate });

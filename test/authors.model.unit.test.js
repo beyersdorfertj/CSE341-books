@@ -34,7 +34,7 @@ const {
   deleteAuthor,
 } = await import('../src/models/authors.js');
 
-// Read (#14) and create (#12) enabled. Update/delete stay skipped (issues #16/#17).
+// Read (#14), create (#12) and update (#15) enabled. Delete stays skipped.
 describe('authors model (unit)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -71,7 +71,7 @@ describe('authors model (unit)', () => {
     expect(result).toEqual(author);
   });
 
-  test.skip('updateAuthor updates by id with $set and returns the result', async () => {
+  test('updateAuthor updates by id with $set and returns the result', async () => {
     const fields = { name: 'Jane A. Doe', birthYear: 1976 };
     collection.updateOne.mockResolvedValue({ matchedCount: 1 });
 
