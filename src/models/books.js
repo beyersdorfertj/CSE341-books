@@ -10,4 +10,30 @@ const getBookById = async (bookId) => {
     return await db.collection('books').findOne({ id: bookId });
 };
 
-export { getBookById, getAllBooks };
+// Stubs for issue-03 (finish books CRUD). Bodies to be implemented.
+// Contract is pinned by test/books.model.unit.test.js.
+
+const createBook = async (book) => {
+    throw new Error('Not implemented');
+};
+
+const updateBook = async (bookId, fields) => {
+    throw new Error('Not implemented');
+};
+
+const deleteBook = async (bookId) => {
+    throw new Error('Not implemented');
+};
+
+const countBooksForAuthor = async (authorId) => {
+    throw new Error('Not implemented');
+};
+
+export {
+    getBookById,
+    getAllBooks,
+    createBook,
+    updateBook,
+    deleteBook,
+    countBooksForAuthor,
+};

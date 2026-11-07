@@ -17,6 +17,16 @@ describe('Books read routes (real DB)', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
+  test('GET /books exposes authorId and never _id', async () => {
+    const res = await request(app).get('/books');
+
+    expect(res.status).toBe(200);
+    for (const book of res.body) {
+      expect(book).toHaveProperty('authorId');
+      expect(book._id).toBeUndefined();
+    }
+  });
+
   test('GET /books/:id returns the matching book', async () => {
     const list = await request(app).get('/books');
     const first = list.body[0];
