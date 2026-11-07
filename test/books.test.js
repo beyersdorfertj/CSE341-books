@@ -121,7 +121,7 @@ describe('Books routes (mocked DB)', () => {
     });
   });
 
-  describe.skip('PUT /books/:id', () => {
+  describe('PUT /books/:id', () => {
     test('updates a book and returns 200', async () => {
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a2' });
       booksModel.updateBook.mockResolvedValue({ matchedCount: 1 });
@@ -138,12 +138,12 @@ describe('Books routes (mocked DB)', () => {
       expect(res.status).toBe(400);
     });
 
-    test('returns 400 when authorId does not match an existing author', async () => {
+    test('returns 422 when authorId does not match an existing author', async () => {
       authorsModel.getAuthorById.mockResolvedValue(null);
 
       const res = await request(app).put('/books/b1').send(validUpdate);
 
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(422);
     });
 
     test('returns 404 when the book does not exist', async () => {
