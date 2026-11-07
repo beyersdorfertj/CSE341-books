@@ -87,11 +87,17 @@ const updateBookHandler = async (req, res) => {
   }
 };
 
-// Stub handler for a later issue (books delete). Returns 501 until implemented.
-// Behaviour is pinned by test/books.test.js and test/books.controller.unit.test.js.
-
 const deleteBookHandler = async (req, res) => {
-  return res.status(501).json({ message: 'Not implemented' });
+  try {
+    const result = await deleteBook(req.params.id);
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    return res.status(204).send();
+  } catch (error) {
+    console.error(`DELETE /books/${req.params.id} failed:`, error.message);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 };
 
 export {

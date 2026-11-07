@@ -22,11 +22,9 @@ const updateBook = async (bookId, fields) => {
     return await db.collection('books').updateOne({ id: bookId }, { $set: fields });
 };
 
-// Stub for a later issue (books delete). Body to be implemented.
-// Contract is pinned by test/books.model.unit.test.js.
-
 const deleteBook = async (bookId) => {
-    throw new Error('Not implemented');
+    const db = await getDb();
+    return await db.collection('books').deleteOne({ id: bookId });
 };
 
 const countBooksForAuthor = async (authorId) => {

@@ -82,7 +82,7 @@ describe('books model (unit)', () => {
     expect(result.matchedCount).toBe(1);
   });
 
-  test.skip('deleteBook deletes by id and returns the result', async () => {
+  test('deleteBook deletes by id and returns the result', async () => {
     collection.deleteOne.mockResolvedValue({ deletedCount: 1 });
 
     const result = await deleteBook('b1');
