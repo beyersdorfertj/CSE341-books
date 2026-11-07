@@ -250,4 +250,21 @@
  *         description: authorId does not match an existing author
  *       500:
  *         description: Unable to update book
+ *   delete:
+ *     summary: Delete a book
+ *     tags:
+ *       - Books
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Book deleted successfully
+ *       404:
+ *         description: Book not found
+ *       500:
+ *         description: Unable to delete book
  */

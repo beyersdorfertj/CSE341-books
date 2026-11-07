@@ -179,7 +179,7 @@ describe('books controller (unit)', () => {
     });
   });
 
-  describe.skip('deleteBookHandler', () => {
+  describe('deleteBookHandler', () => {
     test('responds 204 when the book is deleted', async () => {
       booksModel.deleteBook.mockResolvedValue({ deletedCount: 1 });
       const res = mockRes();

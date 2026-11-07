@@ -156,7 +156,7 @@ describe('Books routes (mocked DB)', () => {
     });
   });
 
-  describe.skip('DELETE /books/:id', () => {
+  describe('DELETE /books/:id', () => {
     test('deletes a book and returns 204', async () => {
       booksModel.deleteBook.mockResolvedValue({ deletedCount: 1 });
 
