@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 
+let client;
 let database;
 
 const getDb = async () => {
@@ -12,10 +13,18 @@ const getDb = async () => {
     throw new Error('MONGODB_URI is required.');
   }
 
-  const client = new MongoClient(connectionString);
+  client = new MongoClient(connectionString);
   await client.connect();
   database = client.db(process.env.MONGODB_DB_NAME || 'practice');
   return database;
 };
 
-export { getDb };
+const closeDb = async () => {
+  if (client) {
+    await client.close();
+    client = undefined;
+    database = undefined;
+  }
+};
+
+export { getDb, closeDb };
