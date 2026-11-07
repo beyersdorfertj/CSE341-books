@@ -4,11 +4,13 @@ import { getDb } from '../db/connect.js';
 // Contract is pinned by test/authors.model.unit.test.js.
 
 const getAllAuthors = async () => {
-  throw new Error('Not implemented');
+  const db = await getDb();
+  return await db.collection('authors').find({}, { projection: { _id: 0 } }).toArray();
 };
 
 const getAuthorById = async (authorId) => {
-  throw new Error('Not implemented');
+  const db = await getDb();
+  return await db.collection('authors').findOne({ id: authorId }, { projection: { _id: 0 } });
 };
 
 const createAuthor = async (author) => {

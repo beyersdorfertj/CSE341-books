@@ -29,8 +29,8 @@ const { default: app } = await import('../app.js');
 const validAuthor = { id: 'a4', name: 'Jane Doe', birthYear: 1975 };
 const validUpdate = { name: 'Jane A. Doe', birthYear: 1976 };
 
-// Skipped: author routes are stubs (issue-02, not yet implemented).
-describe.skip('Authors routes (mocked DB)', () => {
+// Read routes enabled for issue #14. Create/update/delete stay skipped (issues #15/#16/#17).
+describe('Authors routes (mocked DB)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -84,7 +84,7 @@ describe.skip('Authors routes (mocked DB)', () => {
     });
   });
 
-  describe('POST /authors', () => {
+  describe.skip('POST /authors', () => {
     test('creates an author and returns 201 without _id', async () => {
       authorsModel.getAuthorById.mockResolvedValue(null);
       authorsModel.createAuthor.mockResolvedValue(validAuthor);
@@ -119,7 +119,7 @@ describe.skip('Authors routes (mocked DB)', () => {
     });
   });
 
-  describe('PUT /authors/:id', () => {
+  describe.skip('PUT /authors/:id', () => {
     test('updates an author and returns 200', async () => {
       authorsModel.updateAuthor.mockResolvedValue({ matchedCount: 1 });
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a1', ...validUpdate });
@@ -144,7 +144,7 @@ describe.skip('Authors routes (mocked DB)', () => {
     });
   });
 
-  describe('DELETE /authors/:id', () => {
+  describe.skip('DELETE /authors/:id', () => {
     test('returns 204 for an unreferenced author', async () => {
       booksModel.countBooksForAuthor.mockResolvedValue(0);
       authorsModel.deleteAuthor.mockResolvedValue({ deletedCount: 1 });

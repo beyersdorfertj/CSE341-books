@@ -48,8 +48,8 @@ const mockRes = () => {
 const validAuthor = { id: 'a4', name: 'Jane Doe', birthYear: 1975 };
 const validUpdate = { name: 'Jane A. Doe', birthYear: 1976 };
 
-// Skipped: author handlers are stubs (issue-02, not yet implemented).
-describe.skip('authors controller (unit)', () => {
+// Read handlers enabled for issue #14. Create/update/delete stay skipped (issues #15/#16/#17).
+describe('authors controller (unit)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -97,7 +97,7 @@ describe.skip('authors controller (unit)', () => {
     });
   });
 
-  describe('createAuthorHandler', () => {
+  describe.skip('createAuthorHandler', () => {
     test('responds 201 with the created author', async () => {
       authorsModel.getAuthorById.mockResolvedValue(null);
       authorsModel.createAuthor.mockResolvedValue(validAuthor);
@@ -135,7 +135,7 @@ describe.skip('authors controller (unit)', () => {
     });
   });
 
-  describe('updateAuthorHandler', () => {
+  describe.skip('updateAuthorHandler', () => {
     test('responds 200 when the author is updated', async () => {
       authorsModel.updateAuthor.mockResolvedValue({ matchedCount: 1 });
       authorsModel.getAuthorById.mockResolvedValue({ id: 'a1', ...validUpdate });
@@ -164,7 +164,7 @@ describe.skip('authors controller (unit)', () => {
     });
   });
 
-  describe('deleteAuthorHandler', () => {
+  describe.skip('deleteAuthorHandler', () => {
     test('responds 204 for an unreferenced author', async () => {
       booksModel.countBooksForAuthor.mockResolvedValue(0);
       authorsModel.deleteAuthor.mockResolvedValue({ deletedCount: 1 });
