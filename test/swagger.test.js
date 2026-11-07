@@ -61,9 +61,7 @@ describe('Swagger documentation', () => {
     }).not.toThrow();
   });
 
-  // Skipped: most routes are still stubs and undocumented (issues #9/#10).
-  // Re-enable as routes get implemented and documented in src/docs/openapi.js.
-  describe.skip('every route is documented', () => {
+  describe('every route is documented', () => {
     test('routes were discovered from the app', () => {
       expect(routes.length).toBeGreaterThan(0);
     });
