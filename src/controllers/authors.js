@@ -7,9 +7,6 @@ import {
 } from '../models/authors.js';
 import { countBooksForAuthor } from '../models/books.js';
 
-// Stub handlers for issue-02 (authors API CRUD). Return 501 until implemented.
-// Behaviour is pinned by test/authors.test.js and test/authors.controller.unit.test.js.
-
 const getAuthorsHandler = async (req, res) => {
   try {
     return res.status(200).json(await getAllAuthors());
