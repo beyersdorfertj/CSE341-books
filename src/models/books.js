@@ -26,7 +26,8 @@ const deleteBook = async (bookId) => {
 };
 
 const countBooksForAuthor = async (authorId) => {
-    throw new Error('Not implemented');
+    const db = await getDb();
+    return await db.collection('books').countDocuments({ authorId });
 };
 
 export {

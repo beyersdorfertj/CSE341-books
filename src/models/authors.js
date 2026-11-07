@@ -26,7 +26,8 @@ const updateAuthor = async (authorId, fields) => {
 };
 
 const deleteAuthor = async (authorId) => {
-  throw new Error('Not implemented');
+  const db = await getDb();
+  return await db.collection('authors').deleteOne({ id: authorId });
 };
 
 export { getAllAuthors, getAuthorById, createAuthor, updateAuthor, deleteAuthor };

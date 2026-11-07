@@ -91,7 +91,7 @@ describe('books model (unit)', () => {
     expect(result.deletedCount).toBe(1);
   });
 
-  test.skip('countBooksForAuthor counts books referencing the author', async () => {
+  test('countBooksForAuthor counts books referencing the author', async () => {
     collection.countDocuments.mockResolvedValue(2);
 
     const result = await countBooksForAuthor('a1');

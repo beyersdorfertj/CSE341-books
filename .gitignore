@@ -1,5 +1,5 @@
-docs/
-issues/
+/docs/
+/issues/
 *.md
 
 # Generated OpenAPI spec (built on prestart/pretest via `npm run swagger`)

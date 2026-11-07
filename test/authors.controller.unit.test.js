@@ -164,7 +164,7 @@ describe('authors controller (unit)', () => {
     });
   });
 
-  describe.skip('deleteAuthorHandler', () => {
+  describe('deleteAuthorHandler', () => {
     test('responds 204 for an unreferenced author', async () => {
       booksModel.countBooksForAuthor.mockResolvedValue(0);
       authorsModel.deleteAuthor.mockResolvedValue({ deletedCount: 1 });

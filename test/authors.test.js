@@ -144,7 +144,7 @@ describe('Authors routes (mocked DB)', () => {
     });
   });
 
-  describe.skip('DELETE /authors/:id', () => {
+  describe('DELETE /authors/:id', () => {
     test('returns 204 for an unreferenced author', async () => {
       booksModel.countBooksForAuthor.mockResolvedValue(0);
       authorsModel.deleteAuthor.mockResolvedValue({ deletedCount: 1 });

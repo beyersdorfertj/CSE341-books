@@ -81,7 +81,7 @@ describe('authors model (unit)', () => {
     expect(result.matchedCount).toBe(1);
   });
 
-  test.skip('deleteAuthor deletes by id and returns the result', async () => {
+  test('deleteAuthor deletes by id and returns the result', async () => {
     collection.deleteOne.mockResolvedValue({ deletedCount: 1 });
 
     const result = await deleteAuthor('a1');
