@@ -9,8 +9,7 @@ import { getAuthorById } from '../models/authors.js';
 
 const getBooksHandler  = async (req, res) => {
   try {
-    const books = await getAllBooks();
-    return res.status(200).json(books);
+    return res.status(200).json(await getAllBooks());
   } catch (error) {
     console.error('GET /books failed:', error.message);
     return res.status(500).json({ message: 'Internal Server Error' });

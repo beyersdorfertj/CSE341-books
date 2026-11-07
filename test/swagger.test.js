@@ -10,22 +10,37 @@ afterAll(async () => {
   await closeDb();
 });
 
-// Expected location of the generated/authored OpenAPI spec.
-const SPEC_PATH = 'src/swagger.json';
+// Expected location of the generated OpenAPI spec (see swagger.js).
+const SPEC_PATH = 'swagger.json';
 
-// Every route the API exposes must be documented (OpenAPI path style: {id}).
-const routes = [
-  { method: 'get', path: '/books' },
-  { method: 'get', path: '/books/{id}' },
-  { method: 'post', path: '/books' },
-  { method: 'put', path: '/books/{id}' },
-  { method: 'delete', path: '/books/{id}' },
-  { method: 'get', path: '/authors' },
-  { method: 'get', path: '/authors/{id}' },
-  { method: 'post', path: '/authors' },
-  { method: 'put', path: '/authors/{id}' },
-  { method: 'delete', path: '/authors/{id}' },
-];
+// Express path (/books/:id) -> OpenAPI path (/books/{id}).
+const toOpenApiPath = (expressPath) => {
+  return expressPath.replace(/:([^/]+)/g, '{$1}');
+};
+
+// Routes that intentionally are not part of the documented API.
+const UNDOCUMENTED = new Set();
+
+// Recursively collect every route registered on the app (app-level routes plus
+// mounted routers), so a new undocumented route anywhere fails the suite.
+const collectRoutes = (stack) => {
+  const routes = [];
+  for (const layer of stack) {
+    if (layer.route) {
+      const path = toOpenApiPath(layer.route.path);
+      for (const method of Object.keys(layer.route.methods)) {
+        routes.push({ method, path });
+      }
+    } else if (layer.handle && Array.isArray(layer.handle.stack)) {
+      routes.push(...collectRoutes(layer.handle.stack));
+    }
+  }
+  return routes;
+};
+
+const routes = collectRoutes(app.router.stack).filter((route) => {
+  return !UNDOCUMENTED.has(`${route.method} ${route.path}`);
+});
 
 const loadSpec = () => {
   return JSON.parse(fs.readFileSync(SPEC_PATH, 'utf8'));
@@ -47,6 +62,10 @@ describe('Swagger documentation', () => {
   });
 
   describe('every route is documented', () => {
+    test('routes were discovered from the app', () => {
+      expect(routes.length).toBeGreaterThan(0);
+    });
+
     test.each(routes)('$method $path is documented', ({ method, path }) => {
       const spec = loadSpec();
 
