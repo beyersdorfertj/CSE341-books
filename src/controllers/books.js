@@ -29,12 +29,40 @@ const getBookByIdHandler = async (req, res) => {
   }
 };
 
-// Stub handlers for issue-03 (finish books CRUD). Return 501 until implemented.
-// Behaviour is pinned by test/books.test.js and test/books.controller.unit.test.js.
+const isValidIsoDate = (value) => {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value) && !Number.isNaN(Date.parse(value));
+};
+
+const isValidBook = ({ id, authorId, title, publicationDate }) => {
+  return (
+    typeof id === 'string' && id.trim() !== '' &&
+    typeof authorId === 'string' && authorId.trim() !== '' &&
+    typeof title === 'string' && title.trim() !== '' &&
+    isValidIsoDate(publicationDate)
+  );
+};
 
 const createBookHandler = async (req, res) => {
-  return res.status(501).json({ message: 'Not implemented' });
+  try {
+    const { id, authorId, title, publicationDate } = req.body;
+    if (!isValidBook({ id, authorId, title, publicationDate })) {
+      return res.status(400).json({ message: 'Invalid book data' });
+    }
+    if (await getBookById(id)) {
+      return res.status(409).json({ message: 'Book id already exists' });
+    }
+    if (!(await getAuthorById(authorId))) {
+      return res.status(422).json({ message: 'authorId does not match an existing author' });
+    }
+    return res.status(201).json(await createBook({ id, authorId, title, publicationDate }));
+  } catch (error) {
+    console.error('POST /books failed:', error.message);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
 };
+
+// Stub handlers for later issues (books update/delete). Return 501 until implemented.
+// Behaviour is pinned by test/books.test.js and test/books.controller.unit.test.js.
 
 const updateBookHandler = async (req, res) => {
   return res.status(501).json({ message: 'Not implemented' });

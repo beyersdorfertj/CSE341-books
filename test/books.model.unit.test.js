@@ -62,7 +62,7 @@ describe('books model (unit)', () => {
     expect(result).toEqual(book);
   });
 
-  test.skip('createBook inserts the book and returns it', async () => {
+  test('createBook inserts the book and returns it', async () => {
     const book = { id: 'b4', authorId: 'a1', title: 'X', publicationDate: '2026-01-15' };
     collection.insertOne.mockResolvedValue({ acknowledged: true });
 
