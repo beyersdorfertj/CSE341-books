@@ -11,11 +11,25 @@ import { countBooksForAuthor } from '../models/books.js';
 // Behaviour is pinned by test/authors.test.js and test/authors.controller.unit.test.js.
 
 const getAuthorsHandler = async (req, res) => {
-  return res.status(501).json({ message: 'Not implemented' });
+  try {
+    return res.status(200).json(await getAllAuthors());
+  } catch (err) {
+    console.error('Get authors failed', err.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 const getAuthorByIdHandler = async (req, res) => {
-  return res.status(501).json({ message: 'Not implemented' });
+  try {
+    const author = await getAuthorById(req.params.id);
+    if (!author) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+    return res.status(200).json(author);
+  } catch (err) {
+    console.error(`Get /authors/${req.params.id} by ID failed`, err.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 const createAuthorHandler = async (req, res) => {

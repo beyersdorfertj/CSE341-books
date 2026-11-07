@@ -34,8 +34,8 @@ const {
   deleteAuthor,
 } = await import('../src/models/authors.js');
 
-// Skipped: author model functions are stubs (issue-02, not yet implemented).
-describe.skip('authors model (unit)', () => {
+// Read functions enabled for issue #14. Create/update/delete stay skipped (issues #15/#16/#17).
+describe('authors model (unit)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -61,7 +61,7 @@ describe.skip('authors model (unit)', () => {
     expect(result).toEqual(author);
   });
 
-  test('createAuthor inserts the author and returns it', async () => {
+  test.skip('createAuthor inserts the author and returns it', async () => {
     const author = { id: 'a4', name: 'Jane Doe', birthYear: 1975 };
     collection.insertOne.mockResolvedValue({ acknowledged: true });
 
@@ -71,7 +71,7 @@ describe.skip('authors model (unit)', () => {
     expect(result).toEqual(author);
   });
 
-  test('updateAuthor updates by id with $set and returns the result', async () => {
+  test.skip('updateAuthor updates by id with $set and returns the result', async () => {
     const fields = { name: 'Jane A. Doe', birthYear: 1976 };
     collection.updateOne.mockResolvedValue({ matchedCount: 1 });
 
@@ -81,7 +81,7 @@ describe.skip('authors model (unit)', () => {
     expect(result.matchedCount).toBe(1);
   });
 
-  test('deleteAuthor deletes by id and returns the result', async () => {
+  test.skip('deleteAuthor deletes by id and returns the result', async () => {
     collection.deleteOne.mockResolvedValue({ deletedCount: 1 });
 
     const result = await deleteAuthor('a1');
