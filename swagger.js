@@ -1,4 +1,3 @@
-import { writeFileSync } from 'node:fs';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {
@@ -19,7 +18,4 @@ const options = {
   apis: ['./src/docs/openapi.js']
 };
 
-const swaggerSpec = swaggerJsdoc(options);
-
-writeFileSync('./swagger.json', JSON.stringify(swaggerSpec, null, 2));
-console.log('Swagger documentation generated.');
+export const swaggerSpec = swaggerJsdoc(options);

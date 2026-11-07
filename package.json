@@ -15,14 +15,10 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "swagger": "node swagger.js",
-    "prestart": "npm run swagger",
     "start": "node --env-file=.env server.js",
-    "predev": "npm run swagger",
     "dev": "nodemon --env-file=.env server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "pretest": "npm run swagger",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules node --env-file=.env node_modules/jest/bin/jest.js",
     "prepare": "husky"
   },

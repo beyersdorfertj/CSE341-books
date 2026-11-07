@@ -2,9 +2,6 @@
 /issues/
 *.md
 
-# Generated OpenAPI spec (built on prestart/pretest via `npm run swagger`)
-/swagger.json
-
 # Logs
 logs
 *.log*

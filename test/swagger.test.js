@@ -1,17 +1,14 @@
 import request from 'supertest';
-import fs from 'node:fs';
 
 // TDD specs for the Swagger/OpenAPI requirement of issues #9 and #10.
 // Red until Swagger is wired up at /api-docs and an OpenAPI spec exists.
 const { default: app } = await import('../app.js');
 const { closeDb } = await import('../src/db/connect.js');
+const { swaggerSpec } = await import('../swagger.js');
 
 afterAll(async () => {
   await closeDb();
 });
-
-// Expected location of the generated OpenAPI spec (see swagger.js).
-const SPEC_PATH = 'swagger.json';
 
 // Express path (/books/:id) -> OpenAPI path (/books/{id}).
 const toOpenApiPath = (expressPath) => {
@@ -42,10 +39,6 @@ const routes = collectRoutes(app.router.stack).filter((route) => {
   return !UNDOCUMENTED.has(`${route.method} ${route.path}`);
 });
 
-const loadSpec = () => {
-  return JSON.parse(fs.readFileSync(SPEC_PATH, 'utf8'));
-};
-
 describe('Swagger documentation', () => {
   test('GET /api-docs serves the Swagger UI', async () => {
     const res = await request(app).get('/api-docs/');
@@ -54,11 +47,9 @@ describe('Swagger documentation', () => {
     expect(res.text).toMatch(/swagger/i);
   });
 
-  test('an OpenAPI spec file exists and is valid JSON', () => {
-    expect(fs.existsSync(SPEC_PATH)).toBe(true);
-    expect(() => {
-      loadSpec();
-    }).not.toThrow();
+  test('the OpenAPI spec is built in process', () => {
+    expect(swaggerSpec).toBeDefined();
+    expect(swaggerSpec.openapi).toBe('3.0.0');
   });
 
   describe('every route is documented', () => {
@@ -67,7 +58,7 @@ describe('Swagger documentation', () => {
     });
 
     test.each(routes)('$method $path is documented', ({ method, path }) => {
-      const spec = loadSpec();
+      const spec = swaggerSpec;
 
       expect(spec.paths).toBeDefined();
       expect(spec.paths[path]).toBeDefined();
