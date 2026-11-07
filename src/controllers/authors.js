@@ -78,7 +78,19 @@ const updateAuthorHandler = async (req, res) => {
 };
 
 const deleteAuthorHandler = async (req, res) => {
-  return res.status(501).json({ message: 'Not implemented' });
+  try {
+    if (await countBooksForAuthor(req.params.id) > 0) {
+      return res.status(409).json({ message: 'Author is still referenced by books' });
+    }
+    const result = await deleteAuthor(req.params.id);
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+    return res.status(204).send();
+  } catch (err) {
+    console.error(`DELETE /authors/${req.params.id} failed`, err.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 export {
