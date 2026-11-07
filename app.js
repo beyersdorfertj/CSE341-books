@@ -1,7 +1,7 @@
 import express from 'express'
 import router from './src/router.js'
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './swagger.json' with { type: 'json' };
+import { swaggerSpec } from './swagger.js';
 
 const app = express();
 
